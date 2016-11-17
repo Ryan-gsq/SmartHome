@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+    <changeBounds android:duration="300" />
+    <transition
+        class="bbu.com.smartoffice.transition.LogoColor"
+        android:duration="400">
+        <targets>
+            <target android:targetId="@+id/tbLogo" />
+        </targets>
+    </transition>
+</transitionSet>
