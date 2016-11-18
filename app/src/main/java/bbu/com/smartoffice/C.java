@@ -29,4 +29,11 @@ public class C {
     public static final String DEVICE = "DEVICE";
     public static final String SMP = "SMP";
 
+
+    public static final String OneNetCMDUrl = "http://api.heclouds.com/cmds";
+
+    public static final int Errno_NoDevice = -1;
+    public static final int Errno_NoOther = -2;
+    public static final int Errno_NoStream = -3;
+    public static final int Errno_Succeed = 0;
 }

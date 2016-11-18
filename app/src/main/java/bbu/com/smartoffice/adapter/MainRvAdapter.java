@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import bbu.com.smartoffice.jsonBean.DrivesBean;
+import bbu.com.smartoffice.jsonBean.DeviceBean;
 
 /**
  * Created by G on 2016/11/18 0018.
@@ -13,9 +13,9 @@ import bbu.com.smartoffice.jsonBean.DrivesBean;
 
 public class MainRvAdapter extends RecyclerView.Adapter {
 
-    List<DrivesBean.DataBean.DevicesBean> drives;
+    List<DeviceBean.DataBean.DevicesBean> drives;
 
-    public void setData(List<DrivesBean.DataBean.DevicesBean> drivesBean) {
+    public void setData(List<DeviceBean.DataBean.DevicesBean> drivesBean) {
         drives = drivesBean;
     }
 

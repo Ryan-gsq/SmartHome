@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:alpha="0.54"
+        android:textColor="@color/white"
         android:text="Designed by G in earth"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

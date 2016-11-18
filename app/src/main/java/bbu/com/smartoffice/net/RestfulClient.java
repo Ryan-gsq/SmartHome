@@ -217,12 +217,6 @@ public class RestfulClient implements Runnable {
         void resultListener(byte[] result, int code, Map<String, List<String>> header);
     }
 
-    public interface OnResultListener<T> {
-        void succeed(T bean);
-
-        void error(int code);
-    }
-
     private class HandleData {
         public OnServiceResultListener listener;
         public Map<String, List<String>> header;

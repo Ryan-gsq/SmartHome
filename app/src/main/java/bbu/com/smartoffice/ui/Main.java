@@ -17,11 +17,11 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import bbu.com.smartoffice.Model.MainModel;
+import bbu.com.smartoffice.Model.DeviceInfoModel;
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.contract.MainContract;
-import bbu.com.smartoffice.jsonBean.DrivesBean;
+import bbu.com.smartoffice.jsonBean.DeviceBean;
 import bbu.com.smartoffice.presenter.MainPresenter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +32,7 @@ import static bbu.com.smartoffice.ManageActivity.manageActivity;
  * Created by G on 2016/11/15 0015.
  */
 
-public class Main extends BaseFragment<MainPresenter, MainModel> implements MainContract.View {
+public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implements MainContract.View {
     @Bind(R.id.toolbarBg)
     View toolbarBg;
     @Bind(R.id.fab)
@@ -158,7 +158,7 @@ public class Main extends BaseFragment<MainPresenter, MainModel> implements Main
      */
 
     @Override
-    public void setAdapterDate(List<DrivesBean.DataBean.DevicesBean> a) {
+    public void setAdapterDate(List<DeviceBean.DataBean.DevicesBean> a) {
 
     }
 
@@ -175,7 +175,7 @@ public class Main extends BaseFragment<MainPresenter, MainModel> implements Main
     }
 
     @Override
-    public void setError() {
+    public void showTip(String e) {
 
     }
 

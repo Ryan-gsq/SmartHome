@@ -4,12 +4,11 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-import bbu.com.smartoffice.base.BaseModel;
+import bbu.com.smartoffice.Model.DeviceInfoModelBase;
 import bbu.com.smartoffice.base.BasePresenter;
 import bbu.com.smartoffice.base.BaseView;
-import bbu.com.smartoffice.jsonBean.DrivesBean;
+import bbu.com.smartoffice.jsonBean.DeviceBean;
 import bbu.com.smartoffice.ui.Main;
-import rx.Observable;
 
 /**
  * Created by G on 2016/11/16 0016.
@@ -17,28 +16,18 @@ import rx.Observable;
 
 public interface MainContract {
     interface View extends BaseView {
-        void setAdapterDate(List<DrivesBean.DataBean.DevicesBean> a);
+        void setAdapterDate(List<DeviceBean.DataBean.DevicesBean> a);
 
         RecyclerView.Adapter getAdapter();
 
         void upDate();
 
-        void setError();
+        void showTip(String e);
     }
 
-    interface Model extends BaseModel {
-        Observable<String> getDevices();
-
-        Observable<String> getStream(String did);
-
-        Observable<String> setDevice(int id, boolean open);
-
-        Observable<String> queryCmdState(String cmd_uuid);
-    }
-
-    abstract class Presenter extends BasePresenter<Main, Model> {
+    abstract class Presenter extends BasePresenter<Main, DeviceInfoModelBase> {
         public abstract void upDate();
 
-        public abstract void setDeviceState(int id, boolean open);
+        public abstract void setDeviceState(int did, boolean open);
     }
 }
