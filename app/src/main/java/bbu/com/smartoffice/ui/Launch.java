@@ -107,7 +107,7 @@ public class Launch extends BaseFragment {
             logo.setTransitionName("logo");
             manageActivity.setDrawerLayoutAllow(true);
 
-            BaseFragment instance = BaseFragment.getInstance(Main.class);
+            Main instance = BaseFragment.getInstance(Main.class);
             instance.setSharedElementEnterTransition(TransitionUtil.getTransition(R.transition.main_share_entry));
 
             instance.setEnterTransition(TransitionUtil.getTransition(R.transition.main_entry));

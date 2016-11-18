@@ -5,50 +5,60 @@ import com.chinamobile.iot.onenet.OneNetError;
 import com.chinamobile.iot.onenet.OneNetResponse;
 import com.chinamobile.iot.onenet.ResponseListener;
 
+import bbu.com.smartoffice.C;
 import bbu.com.smartoffice.contract.MainContract;
 import bbu.com.smartoffice.utils.Utils;
-
-import static bbu.com.smartoffice.C.APIkey;
-import static bbu.com.smartoffice.C.DEVICE;
+import rx.Observable;
 
 /**
  * Created by G on 2016/11/17 0017.
  */
 
-public class MainModel extends MainContract.MainModel {
-    private OneNetApi oneNet;
+public class MainModel implements MainContract.Model {
+
+    OneNetApi oneNet;
 
     @Override
-    protected void onStart() {
+    public void onAttach() {
         oneNet = OneNetApi.getInstance(Utils.getContext());
     }
 
     @Override
-    public void upDate() {
-        oneNet.getDevices(APIkey, null, null, null, DEVICE, null, null, new ResponseListener() {
-            @Override
-            public void onResponse(OneNetResponse oneNetResponse) {
-                if (oneNetResponse.getErrno() == 0) {
-                    // 请求成功
-                    String data = oneNetResponse.getData();
-                    p.onSucceedUpData(data);
-                } else {
-                    // 连接服务器成功，但请求发生错误
-                    String error = oneNetResponse.getError();
-                    p.onErrorDate(error);
-                }
-            }
+    public void onDestroy() {
 
-            @Override
-            public void onError(OneNetError oneNetError) {
-                //服务器或者网络错误
-                p.onErrorDate("网络或者服务器错误");
-            }
+    }
+
+    @Override
+    public Observable<String> getDevices() {
+        return Observable.create(subscriber -> {
+            oneNet.getDevices(C.APIkey, null, null, null, C.DEVICE, null, null, new ResponseListener() {
+                @Override
+                public void onResponse(OneNetResponse oneNetResponse) {
+                    subscriber.onNext(oneNetResponse.getRawResponse());
+                    subscriber.onCompleted();
+                }
+
+                @Override
+                public void onError(OneNetError oneNetError) {
+                    subscriber.onNext(oneNetError.getLocalizedMessage());
+                    subscriber.onCompleted();
+                }
+            });
         });
     }
 
     @Override
-    public void setDeviceState(int id, boolean open) {
-        //设置数据流 修改设备状态
+    public Observable<String> getStream(String did) {
+        return null;
+    }
+
+    @Override
+    public Observable<String> setDevice(int id, boolean open) {
+        return null;
+    }
+
+    @Override
+    public Observable<String> queryCmdState(String cmd_uuid) {
+        return null;
     }
 }

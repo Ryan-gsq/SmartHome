@@ -1,42 +1,32 @@
 package bbu.com.smartoffice.base;
 
 
-import bbu.com.smartoffice.utils.Tutil;
-
 /**
  * Created by G on 2016/6/18 0018.
  */
 
-public abstract class BasePresenter<V extends BaseFragment, M extends BaseModel> {
+public abstract class BasePresenter<V, M extends BaseModel> {
     //dispatchPresent
     protected M m;
     protected V v;
 
-    /**
-     * 保存 Model View 实例
-     */
-    public BasePresenter() {
-        v = Tutil.getT(this, 0);
-        m = Tutil.getT(this, 1);
-    }
-
-    /**
-     * 通知 Model 调用 onStart
-     */
-    protected void onStart() {
+    public void setVM(V v, M m) {
+        this.m = m;
+        this.v = v;
         if (m != null)
-            m.onStart();
+            m.onAttach();
     }
 
-    ;
+    public abstract void onAttach();
 
     /**
      * 释放引用
      */
-    protected void onDestroy() {
-        v = null;
-        if (m != null)
+    public void onDestroy() {
+        if (m != null) {
             m.onDestroy();
+        }
+        v = null;
         m = null;
     }
 }

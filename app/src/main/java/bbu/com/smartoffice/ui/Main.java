@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,11 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.ogaclejapan.smarttablayout.utils.ViewPagerItemAdapter;
+import java.util.List;
 
+import bbu.com.smartoffice.Model.MainModel;
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.contract.MainContract;
+import bbu.com.smartoffice.jsonBean.DrivesBean;
+import bbu.com.smartoffice.presenter.MainPresenter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -28,7 +32,7 @@ import static bbu.com.smartoffice.ManageActivity.manageActivity;
  * Created by G on 2016/11/15 0015.
  */
 
-public class Main extends BaseFragment<MainContract.MainPresenter> implements MainContract.MainView {
+public class Main extends BaseFragment<MainPresenter, MainModel> implements MainContract.View {
     @Bind(R.id.toolbarBg)
     View toolbarBg;
     @Bind(R.id.fab)
@@ -45,6 +49,8 @@ public class Main extends BaseFragment<MainContract.MainPresenter> implements Ma
     private View rootView;
     private AnimatedVectorDrawable menuAnimated;
     private AnimatedVectorDrawable backAnimated;
+
+    private RecyclerView.Adapter adapter;
 
     @Nullable
     @Override
@@ -112,8 +118,10 @@ public class Main extends BaseFragment<MainContract.MainPresenter> implements Ma
      * 初始化 recycleView
      */
     private void initRecycleView() {
-
+        recycleView.setHasFixedSize(true);
+        recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
 
     @Override
     public void onDestroyView() {
@@ -121,24 +129,6 @@ public class Main extends BaseFragment<MainContract.MainPresenter> implements Ma
         ButterKnife.unbind(this);
     }
 
-    /**
-     * View 接口实现
-     * -------------------------------------------------
-     */
-    @Override
-    public void setViewPager() {
-
-    }
-
-    @Override
-    public void upDate() {
-
-    }
-
-    @Override
-    public void setError() {
-
-    }
 
     /**
      * viewPager 改变监听
@@ -161,5 +151,33 @@ public class Main extends BaseFragment<MainContract.MainPresenter> implements Ma
         }
 
     }
+
+    /**
+     * View 接口实现
+     * -------------------------------------------------
+     */
+
+    @Override
+    public void setAdapterDate(List<DrivesBean.DataBean.DevicesBean> a) {
+
+    }
+
+    @Override
+    public RecyclerView.Adapter getAdapter() {
+        return null;
+    }
+
+    @Override
+    public void upDate() {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void setError() {
+
+    }
+
 }
 

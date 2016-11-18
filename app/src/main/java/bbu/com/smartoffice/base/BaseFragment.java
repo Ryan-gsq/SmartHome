@@ -12,7 +12,7 @@ import static bbu.com.smartoffice.ManageActivity.manageActivity;
  * Created by G on 2016/11/15 0015.
  */
 
-public class BaseFragment<P extends BasePresenter> extends Fragment {
+public class BaseFragment<P extends BasePresenter, M extends BaseModel> extends Fragment {
     BasePresenter presenter;
 
     /**
@@ -21,7 +21,7 @@ public class BaseFragment<P extends BasePresenter> extends Fragment {
      * @param cls
      * @return
      */
-    public static BaseFragment getInstance(Class<? extends BaseFragment> cls) {
+    public static <T extends BaseFragment> T getInstance(Class<T> cls) {
         Fragment fragmentByTag = manageActivity.getFragmentManager().findFragmentByTag(cls.getName());
         if (fragmentByTag == null) {
             try {
@@ -30,7 +30,7 @@ public class BaseFragment<P extends BasePresenter> extends Fragment {
                 e.printStackTrace();
             }
         }
-        return (BaseFragment) fragmentByTag;
+        return (T) fragmentByTag;
     }
 
     /**
@@ -42,8 +42,10 @@ public class BaseFragment<P extends BasePresenter> extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = Tutil.getT(this, 0);
-        if (presenter != null)
-            presenter.onStart();
+        if (presenter != null) {
+            presenter.setVM(this, (BaseModel) Tutil.getT(this, 1));
+            presenter.onAttach();
+        }
     }
 
     /**

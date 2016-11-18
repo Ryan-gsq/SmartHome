@@ -52,7 +52,7 @@ public class Drawer extends BaseFragment implements DrawerRvAdapter.OnItemClickL
 
     @Override
     public void onItemClickListener(int position) {
-        final BaseFragment fragment = BaseFragment.getInstance(Energy.class);
+        final Energy fragment = BaseFragment.getInstance(Energy.class);
         switch (position) {
             case 0:
                 break;
