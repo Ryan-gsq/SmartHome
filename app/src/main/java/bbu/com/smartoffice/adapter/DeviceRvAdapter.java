@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.jsonBean.DeviceBean;
@@ -40,7 +41,6 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DeviceHold h = (DeviceHold) holder;
         DevicesInfoBean.infoBean infoBean = devices.infos.get(position);
-        setIcon(h, infoBean);
         DeviceBean.DataBean.DevicesBean devicesBean = infoBean.getDevicesBean();
         StreamBean streamBean = infoBean.getStreamBean();
         StreamBean.DataBean dataBean;
@@ -52,12 +52,21 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
                 break;
             }
         }
+
+        h.icon.setImageResource(getIcon(devicesBean.getTags().get(1)));
         h.title.setText(devicesBean.getTitle());
         h.energy.setText("25Kw/H");
     }
 
-    private String getTimeDifferent(String s, String e) {
+    private int getIcon(String tag) {
+        return R.drawable.audio_wave;
+    }
+
+
+    private String getTimeDifferent(String e) {
         SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String s = dfs.format(curDate);
         java.util.Date begin = null;
         java.util.Date end = null;
         long between = 0;
@@ -84,13 +93,9 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         if (second1 != 0)
             result += second1 + " 秒 ";
 
-        return result;
+        return result + "  ago";
     }
 
-
-    private void setIcon(DeviceHold h, DevicesInfoBean.infoBean infoBean) {
-
-    }
 
     @Override
     public int getItemCount() {
