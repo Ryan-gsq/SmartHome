@@ -8,7 +8,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -45,17 +44,22 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         StreamBean streamBean = infoBean.getStreamBean();
         StreamBean.DataBean dataBean;
         int currentValue = 0;
+        String endTime = "";
         for (int i = 0; i < streamBean.getData().size(); i++) {
             dataBean = streamBean.getData().get(i);
             if (dataBean.getId().equals("switch")) {
                 currentValue = dataBean.getCurrent_value();
+                endTime = dataBean.getUpdate_at();
                 break;
             }
         }
 
         h.icon.setImageResource(getIcon(devicesBean.getTags().get(1)));
         h.title.setText(devicesBean.getTitle());
-        h.energy.setText("25Kw/H");
+        h.switchState.setText(devicesBean.isOnline() ? "在线" : "离线");
+        h.switchButton.setChecked(currentValue != 0);
+        h.time.setText(getTimeDifferent(endTime));
+        h.mode.setText("无规则");
     }
 
     private int getIcon(String tag) {
@@ -74,8 +78,8 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
             begin = dfs.parse(s);
             end = dfs.parse(e);
             between = (end.getTime() - begin.getTime()) / 1000;//除以1000是为了转换成秒
-        } catch (ParseException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            return "nothing";
         }
 
         long day1 = between / (24 * 3600);
@@ -102,13 +106,13 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         return (devices == null || devices.infos == null) ? 0 : devices.infos.size();
     }
 
-    private static class DeviceHold extends RecyclerView.ViewHolder {
+    public static class DeviceHold extends RecyclerView.ViewHolder {
         @Bind(R.id.icon)
         ImageView icon;
         @Bind(R.id.title)
         TextView title;
-        @Bind(R.id.energy)
-        TextView energy;
+        @Bind(R.id.switchState)
+        TextView switchState;
         @Bind(R.id.mode)
         TextView mode;
         @Bind(R.id.time)

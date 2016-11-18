@@ -82,10 +82,15 @@ public class DeviceInfoModel implements DeviceInfoModelBase {
 
                 //取回成功   设备列表不为空
                 getDevicesInfo(devices).subscribe(dib -> {
+
                     if (Objects.equals(tag, C.DEVICE))
                         deviceInfoBean = dib;
                     else
                         sensorInfoBean = dib;
+                    if (dib == null) {
+                        subscriber.onNext(C.Errno_NoStream);
+                        subscriber.onCompleted();
+                    }
                     subscriber.onNext(C.Errno_Succeed);
                     subscriber.onCompleted();
                 });
@@ -139,8 +144,10 @@ public class DeviceInfoModel implements DeviceInfoModelBase {
                     try {
                         streamBean = gson.fromJson(s, StreamBean.class);
                     } catch (Exception e) {
-                        streamBean = null;
+                        subscriber.onNext(null);
+                        subscriber.onCompleted();
                         e.printStackTrace();
+                        return;
                     }
                     DevicesInfoBean.infoBean infoBean = new DevicesInfoBean.infoBean();
                     infoBean.setDevicesBean(devicesBean);

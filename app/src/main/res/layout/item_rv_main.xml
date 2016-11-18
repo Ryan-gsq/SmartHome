@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="@+id/view" />
 
     <TextView
-        android:id="@+id/energy"
+        android:id="@+id/switchState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -124,7 +124,7 @@
         android:alpha="0.2"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/energy"
+        app:layout_constraintLeft_toRightOf="@+id/switchState"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
