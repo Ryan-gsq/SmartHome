@@ -15,13 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.util.List;
+import com.orhanobut.logger.Logger;
 
 import bbu.com.smartoffice.Model.DeviceInfoModel;
 import bbu.com.smartoffice.R;
+import bbu.com.smartoffice.adapter.DeviceRvAdapter;
 import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.contract.MainContract;
-import bbu.com.smartoffice.jsonBean.DeviceBean;
+import bbu.com.smartoffice.jsonBean.DevicesInfoBean;
 import bbu.com.smartoffice.presenter.MainPresenter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,7 +51,7 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
     private AnimatedVectorDrawable menuAnimated;
     private AnimatedVectorDrawable backAnimated;
 
-    private RecyclerView.Adapter adapter;
+    private DeviceRvAdapter adapter;
 
     @Nullable
     @Override
@@ -118,8 +119,10 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
      * 初始化 recycleView
      */
     private void initRecycleView() {
+        adapter = new DeviceRvAdapter();
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recycleView.setAdapter(adapter);
     }
 
 
@@ -158,13 +161,13 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
      */
 
     @Override
-    public void setAdapterDate(List<DeviceBean.DataBean.DevicesBean> a) {
-
+    public void setAdapterDate(DevicesInfoBean infos) {
+        adapter.setData(infos);
     }
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        return null;
+        return adapter;
     }
 
     @Override
@@ -176,7 +179,8 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
 
     @Override
     public void showTip(String e) {
-
+        Logger.d(e);
+        //TODO 错误提示控件
     }
 
 }

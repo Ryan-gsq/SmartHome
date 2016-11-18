@@ -7,6 +7,7 @@ import com.chinamobile.iot.onenet.ResponseListener;
 import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.Objects;
 
 import bbu.com.smartoffice.C;
 import bbu.com.smartoffice.jsonBean.DeviceBean;
@@ -29,6 +30,8 @@ import rx.schedulers.Schedulers;
 public class DeviceInfoModel implements DeviceInfoModelBase {
 
     public static DevicesInfoBean deviceInfoBean;
+    public static DevicesInfoBean sensorInfoBean;
+
     private OneNetApi oneNet;
     private String tag = C.DEVICE;
 
@@ -79,13 +82,10 @@ public class DeviceInfoModel implements DeviceInfoModelBase {
 
                 //取回成功   设备列表不为空
                 getDevicesInfo(devices).subscribe(dib -> {
-                    deviceInfoBean = dib;
-                    if (dib == null) {
-                        //获取数据流错误
-                        subscriber.onNext(C.Errno_NoOther);
-                        subscriber.onCompleted();
-                        return;
-                    }
+                    if (Objects.equals(tag, C.DEVICE))
+                        deviceInfoBean = dib;
+                    else
+                        sensorInfoBean = dib;
                     subscriber.onNext(C.Errno_Succeed);
                     subscriber.onCompleted();
                 });

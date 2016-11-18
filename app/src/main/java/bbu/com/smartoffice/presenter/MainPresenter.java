@@ -1,6 +1,7 @@
 package bbu.com.smartoffice.presenter;
 
 import bbu.com.smartoffice.C;
+import bbu.com.smartoffice.Model.DeviceInfoModel;
 import bbu.com.smartoffice.contract.MainContract;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -22,13 +23,15 @@ public class MainPresenter extends MainContract.Presenter {
                 case C.Errno_NoOther:
                     tip = "获取数据失败 未知错误";
                     break;
-                case C.Errno_NoStream:
-                    tip = "获取设备状态失败";
+                case C.Errno_Succeed:
+                    tip = "更新设备数据成功";
                     break;
             }
             v.showTip(tip);
 
-            if (s == C.Errno_Succeed) {
+            if (s.equals(C.Errno_Succeed)) {
+                v.setAdapterDate(DeviceInfoModel.deviceInfoBean);
+                v.upDate();
             }
         });
 

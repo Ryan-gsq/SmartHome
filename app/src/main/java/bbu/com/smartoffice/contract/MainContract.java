@@ -2,12 +2,10 @@ package bbu.com.smartoffice.contract;
 
 import android.support.v7.widget.RecyclerView;
 
-import java.util.List;
-
 import bbu.com.smartoffice.Model.DeviceInfoModelBase;
 import bbu.com.smartoffice.base.BasePresenter;
 import bbu.com.smartoffice.base.BaseView;
-import bbu.com.smartoffice.jsonBean.DeviceBean;
+import bbu.com.smartoffice.jsonBean.DevicesInfoBean;
 import bbu.com.smartoffice.ui.Main;
 
 /**
@@ -16,7 +14,7 @@ import bbu.com.smartoffice.ui.Main;
 
 public interface MainContract {
     interface View extends BaseView {
-        void setAdapterDate(List<DeviceBean.DataBean.DevicesBean> a);
+        void setAdapterDate(DevicesInfoBean infos);
 
         RecyclerView.Adapter getAdapter();
 
