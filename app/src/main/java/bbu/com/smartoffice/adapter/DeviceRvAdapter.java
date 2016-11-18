@@ -1,5 +1,7 @@
 package bbu.com.smartoffice.adapter;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.jsonBean.DeviceBean;
 import bbu.com.smartoffice.jsonBean.DevicesInfoBean;
 import bbu.com.smartoffice.jsonBean.StreamBean;
+import bbu.com.smartoffice.utils.Utils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -54,7 +57,7 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
             }
         }
 
-        h.icon.setImageResource(getIcon(devicesBean.getTags().get(1)));
+        h.icon.setImageDrawable(getIcon(devicesBean.getTags().get(1)));
         h.title.setText(devicesBean.getTitle());
         h.switchState.setText(devicesBean.isOnline() ? "在线" : "离线");
         h.switchButton.setChecked(currentValue != 0);
@@ -62,8 +65,11 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         h.mode.setText("无规则");
     }
 
-    private int getIcon(String tag) {
-        return R.drawable.audio_wave;
+    private Drawable getIcon(String tag) {
+        Drawable drawable = Utils.getContext().getDrawable(R.drawable.audio_wave);
+        drawable.mutate().setColorFilter(Utils.getColorFromRes(R.color.black), PorterDuff.Mode.SRC_IN);
+        drawable.setAlpha(137);
+        return drawable;
     }
 
 
@@ -75,8 +81,8 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         java.util.Date end = null;
         long between = 0;
         try {
-            begin = dfs.parse(s);
-            end = dfs.parse(e);
+            begin = dfs.parse(e);
+            end = dfs.parse(s);
             between = (end.getTime() - begin.getTime()) / 1000;//除以1000是为了转换成秒
         } catch (Exception ex) {
             return "nothing";
@@ -89,13 +95,13 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
 
         String result = "";
         if (day1 != 0)
-            result += day1 + " 天 ";
+            result += day1 + " day ";
         if (hour1 != 0)
-            result += hour1 + " 小时 ";
+            result += hour1 + " hour ";
         if (minute1 != 0)
-            result += minute1 + " 分 ";
+            result += minute1 + " min ";
         if (second1 != 0)
-            result += second1 + " 秒 ";
+            result += second1 + " s ";
 
         return result + "  ago";
     }
