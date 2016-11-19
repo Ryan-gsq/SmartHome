@@ -3,6 +3,7 @@ package bbu.com.smartoffice.presenter;
 import bbu.com.smartoffice.C;
 import bbu.com.smartoffice.Model.DeviceInfoModel;
 import bbu.com.smartoffice.contract.MainContract;
+import bbu.com.smartoffice.utils.OneNetUtils;
 import rx.android.schedulers.AndroidSchedulers;
 
 
@@ -38,8 +39,8 @@ public class MainPresenter extends MainContract.Presenter {
     }
 
     @Override
-    public void setDeviceState(int id, boolean open) {
-
+    public void sendCmd(String did, String state) {
+        OneNetUtils.SendCmd(did, state);
     }
 
     @Override

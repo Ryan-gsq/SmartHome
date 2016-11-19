@@ -28,9 +28,18 @@ import butterknife.ButterKnife;
 public class DeviceRvAdapter extends RecyclerView.Adapter {
 
     DevicesInfoBean devices;
+    private onClickListener listener;
 
     public void setData(DevicesInfoBean drivesBean) {
         devices = drivesBean;
+    }
+
+    public void setOnclickListener(onClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface onClickListener {
+        void onClick(ClickData data);
     }
 
     @Override
@@ -63,6 +72,20 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         h.switchButton.setChecked(currentValue != 0);
         h.time.setText(getTimeDifferent(endTime));
         h.mode.setText("无规则");
+
+        int finalCurrentValue = currentValue;
+        h.switchButton.setOnCheckedChangeListener((compoundButton, b) -> {
+            ClickData clickData = new ClickData();
+            clickData.did = devicesBean.getId();
+            clickData.status = finalCurrentValue == 0 ? "on" : "off";
+            if (listener != null)
+                listener.onClick(clickData);
+        });
+    }
+
+    public static class ClickData {
+        public String did;
+        public String status;
     }
 
     private Drawable getIcon(String tag) {
@@ -111,6 +134,7 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return (devices == null || devices.infos == null) ? 0 : devices.infos.size();
     }
+
 
     public static class DeviceHold extends RecyclerView.ViewHolder {
         @Bind(R.id.icon)

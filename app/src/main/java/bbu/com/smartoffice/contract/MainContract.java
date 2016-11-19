@@ -25,6 +25,6 @@ public interface MainContract {
     abstract class Presenter extends BasePresenter<View, DeviceInfoModelBase> {
         public abstract void upDate();
 
-        public abstract void setDeviceState(int did, boolean open);
+        public abstract void sendCmd(String did, String state);
     }
 }

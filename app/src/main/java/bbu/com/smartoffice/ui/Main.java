@@ -59,8 +59,8 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
         animatorIcon();
-        setListener();
         initRecycleView();
+        setListener();
         return rootView;
     }
 
@@ -91,6 +91,10 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
                     }
                 }, 300L);
             }
+        });
+        adapter.setOnclickListener(data -> {
+            p.sendCmd(data.did, data.status);
+            //不进行命令成功检测
         });
     }
 

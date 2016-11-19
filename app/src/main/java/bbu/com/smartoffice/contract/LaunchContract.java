@@ -14,6 +14,7 @@ public interface LaunchContract {
     }
 
     abstract class Presenter extends BasePresenter<View, DeviceInfoModelBase> {
+        public abstract Observable<Integer> getDevice(String type);
     }
 
 }

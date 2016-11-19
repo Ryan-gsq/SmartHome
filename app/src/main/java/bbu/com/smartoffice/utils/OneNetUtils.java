@@ -13,6 +13,7 @@ import static bbu.com.smartoffice.net.RestfulClient.byteToString;
 public class OneNetUtils {
     public static Observable<String> SendCmd(String did, String cmd) {
         RestfulClient restfulClient = new RestfulClient();
+        restfulClient.addUrlParams("device_id", did);
         restfulClient.addHeaderParams("api-key", C.APIkey);
         restfulClient.addBody(cmd);
         return Observable.create(subscriber -> restfulClient.create(C.POST, C.OneNetCMDUrl, (result, code, header) -> {
