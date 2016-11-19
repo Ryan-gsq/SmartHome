@@ -40,7 +40,7 @@ public class MainPresenter extends MainContract.Presenter {
 
     @Override
     public void sendCmd(String did, String state) {
-        OneNetUtils.SendCmd(did, state);
+        OneNetUtils.SendCmd(did, state).subscribe(s -> com.orhanobut.logger.Logger.d(s));
     }
 
     @Override
