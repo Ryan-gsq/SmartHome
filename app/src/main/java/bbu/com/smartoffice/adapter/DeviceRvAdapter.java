@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.jsonBean.DeviceBean;
@@ -28,7 +30,12 @@ import butterknife.ButterKnife;
 public class DeviceRvAdapter extends RecyclerView.Adapter {
 
     DevicesInfoBean devices;
+    Map<String, Integer> iconMap = new HashMap<>();
     private onClickListener listener;
+
+
+    public DeviceRvAdapter() {
+    }
 
     public void setData(DevicesInfoBean drivesBean) {
         devices = drivesBean;
