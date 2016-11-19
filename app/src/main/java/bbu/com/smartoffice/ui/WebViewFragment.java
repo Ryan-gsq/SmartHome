@@ -4,7 +4,6 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,10 +41,8 @@ import static bbu.com.smartoffice.R.id.webView;
 public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoModel> {
     @Bind(R.id.toolbarBg)
     View toolbarBg;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-    @Bind(R.id.tbNavigation)
-    ImageView tbNavigation;
+    @Bind(R.id.tbBack)
+    ImageView tbBack;
     @Bind(R.id.tbLogo)
     ImageView tbLogo;
     @Bind(R.id.tbAdd)
@@ -86,7 +83,7 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
                 animNavButton(true);
             }
         });
-        tbNavigation.setOnClickListener(new View.OnClickListener() {
+        tbBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 manageActivity.getFragmentManager().popBackStack();
@@ -107,10 +104,10 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
      */
     private void animNavButton(boolean back) {
         if (back) {
-            tbNavigation.setImageDrawable(menuAnimated);
+            tbBack.setImageDrawable(menuAnimated);
             menuAnimated.start();
         } else {
-            tbNavigation.setImageDrawable(backAnimated);
+            tbBack.setImageDrawable(backAnimated);
             backAnimated.start();
         }
     }
