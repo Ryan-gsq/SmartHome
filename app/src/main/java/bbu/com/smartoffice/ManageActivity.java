@@ -124,7 +124,6 @@ public class ManageActivity extends Activity {
         } else {
             Toast.makeText(this, "在按一次退出程序", Toast.LENGTH_SHORT).show();
         }
-
         backPressPrevious = System.currentTimeMillis();
     }
 

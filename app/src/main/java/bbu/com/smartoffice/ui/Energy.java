@@ -6,11 +6,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import bbu.com.smartoffice.ManageActivity;
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.utils.TransitionUtil;
@@ -38,6 +38,8 @@ public class Energy extends BaseFragment {
 
     String[] date = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};//X轴的标注
     int[] score = {33, 36, 50, 32, 28, 69, 20};//图表的数据点
+    @Bind(R.id.tbBack)
+    ImageView tbBack;
     private View rootView;
     private List<PointValue> mPointValues = new ArrayList<PointValue>();
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
@@ -52,13 +54,14 @@ public class Energy extends BaseFragment {
         getAxisXLables();//获取x轴的标注
         getAxisPoints();//获取坐标点
         initLineChart();//初始化
+        tbBack.setOnClickListener(view -> getFragmentManager().popBackStack());
         return rootView;
 
     }
 
     private void transition() {
         setExitTransition(TransitionUtil.getTransition(R.transition.slid_left));
-        setExitTransition(TransitionUtil.getTransition(R.transition.slid_right));
+        setEnterTransition(TransitionUtil.getTransition(R.transition.slid_right));
     }
 
     @Override
@@ -70,16 +73,6 @@ public class Energy extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-    private void finish() {
-        ManageActivity.manageActivity.replaceFragment(BaseFragment.getInstance(Main.class)).commitAllowingStateLoss();
-    }
-
-    @Override
-    public boolean onInterceptBackClick() {
-        finish();
-        return true;
     }
 
     /**

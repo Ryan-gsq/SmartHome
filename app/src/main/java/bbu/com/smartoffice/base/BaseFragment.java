@@ -60,7 +60,8 @@ public class BaseFragment<P extends BasePresenter, M extends BaseModel> extends 
      * @return 真 不响应返回按下 假 响应
      */
     public boolean onInterceptBackClick() {
-        return false;
+        manageActivity.getFragmentManager().popBackStack();
+        return true;
     }
 
     /**

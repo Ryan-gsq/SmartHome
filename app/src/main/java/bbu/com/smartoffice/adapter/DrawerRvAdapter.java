@@ -18,9 +18,8 @@ import butterknife.ButterKnife;
 
 public class DrawerRvAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
-    private final String[] titleList = {"设备列表", "场景设置", "能耗统计"};
-    private final int[] iconList = {R.drawable.ic_device_hub_white_48dp,
-            R.drawable.ic_assistant_photo_white_48dp, R.drawable.ic_show_chart_white_48dp};
+    private final String[] titleList = {"设备列表", "能耗统计"};
+    private final int[] iconList = {R.drawable.ic_device_hub_white_48dp, R.drawable.ic_show_chart_white_48dp};
     private int focusItem = 0;
     private int TYPE_NOMAL = 1, TYPE_FOCUS = 2;
     private OnItemClickListener listener;

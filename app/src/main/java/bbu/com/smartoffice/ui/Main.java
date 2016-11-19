@@ -115,6 +115,8 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
      * NavButton 矢量动画 改变   back - true  menu>back
      */
     private void animNavButton(boolean back) {
+        menuAnimated.stop();
+        backAnimated.stop();
         if (back) {
             tbNavigation.setImageDrawable(menuAnimated);
             menuAnimated.start();
@@ -143,7 +145,6 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
      * View 接口实现
      * -------------------------------------------------
      */
-
     @Override
     public void setAdapterDate(DevicesInfoBean infos) {
         adapter.setData(infos);

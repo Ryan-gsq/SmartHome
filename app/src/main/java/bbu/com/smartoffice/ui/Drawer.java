@@ -1,9 +1,8 @@
 package bbu.com.smartoffice.ui;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -53,22 +52,9 @@ public class Drawer extends BaseFragment implements DrawerRvAdapter.OnItemClickL
     @Override
     public void onItemClickListener(int position) {
         final Energy fragment = BaseFragment.getInstance(Energy.class);
-        switch (position) {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-        }
         ManageActivity.manageActivity.drawerLayout.closeDrawer(Gravity.LEFT);
-        ManageActivity.manageActivity.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                FragmentTransaction fragmentTransaction = ManageActivity.manageActivity.showFragment(fragment, true);
-                fragmentTransaction.hide(BaseFragment.getInstance(Main.class)).commitAllowingStateLoss();
-            }
-        });
+        new Handler().postDelayed(() -> {
+            ManageActivity.manageActivity.replaceFragment(fragment).addToBackStack(null).commitAllowingStateLoss();
+        }, 400);
     }
 }
