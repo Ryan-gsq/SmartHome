@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/status_bar_height">
+
+    <View
+        android:id="@+id/toolbarBg"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@color/primary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/tbNavigation"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="11dp"
+        android:alpha="0.87"
+        android:background="@drawable/drawer_oval_ripple"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:padding="6dp"
+        android:src="@drawable/ic_menu_vector"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarBg"
+        app:layout_constraintLeft_toLeftOf="@+id/toolbarBg"
+        app:layout_constraintTop_toTopOf="@+id/toolbarBg" />
+
+    <ImageView
+        android:id="@+id/tbAdd"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="11dp"
+        android:alpha="0.87"
+        android:background="@drawable/drawer_oval_ripple"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:padding="6dp"
+        android:src="@drawable/ic_add_white_48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarBg"
+        app:layout_constraintRight_toRightOf="@+id/toolbarBg"
+        app:layout_constraintTop_toTopOf="@+id/toolbarBg" />
+    <!--
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/backgroundLight"
+            android:transitionGroup="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarBg" />
+    -->
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_assistant_photo_white_48dp"
+        android:stateListAnimator="@animator/fab_raise"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:rippleColor="@color/transparentBack" />
+
+    <ImageView
+        android:id="@+id/tbLogo"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="@null"
+        android:src="@drawable/logo_accent"
+        android:transitionName="logo"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarBg"
+        app:layout_constraintLeft_toLeftOf="@+id/toolbarBg"
+        app:layout_constraintRight_toRightOf="@+id/toolbarBg"
+        app:layout_constraintTop_toTopOf="@+id/toolbarBg" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarBg">
+
+    </WebView>
+</android.support.constraint.ConstraintLayout>

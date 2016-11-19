@@ -90,6 +90,10 @@ public class Launch extends BaseFragment<LaunchPresenter, DeviceInfoModel> {
         new Handler().postDelayed(() -> conditionTaskUtil.excute()
                 , 6000L);
 
+
+//        if (p == null) {
+//            p = Tutil.getT(this, 0);
+//        }
         p.getDevice(C.DEVICE).subscribe(integer -> {
             Logger.d(integer);
             p.getDevice(C.SENSOR).subscribe(integer1 -> {

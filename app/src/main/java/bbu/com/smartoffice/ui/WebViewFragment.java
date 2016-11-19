@@ -1,70 +1,73 @@
 package bbu.com.smartoffice.ui;
 
-import android.app.FragmentTransaction;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-import com.orhanobut.logger.Logger;
+import java.io.IOException;
 
-import bbu.com.smartoffice.ManageActivity;
 import bbu.com.smartoffice.Model.DeviceInfoModel;
 import bbu.com.smartoffice.R;
-import bbu.com.smartoffice.adapter.DeviceRvAdapter;
 import bbu.com.smartoffice.base.BaseFragment;
-import bbu.com.smartoffice.contract.MainContract;
-import bbu.com.smartoffice.jsonBean.DevicesInfoBean;
-import bbu.com.smartoffice.presenter.MainPresenter;
+import bbu.com.smartoffice.net.HttpRequest;
+import bbu.com.smartoffice.presenter.WebViewPresenter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static bbu.com.smartoffice.ManageActivity.manageActivity;
+import static bbu.com.smartoffice.R.id.webView;
 
 /**
  * Created by G on 2016/11/15 0015.
  */
 
-public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implements MainContract.View {
+public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoModel> {
     @Bind(R.id.toolbarBg)
     View toolbarBg;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.tbBack)
+    @Bind(R.id.tbNavigation)
     ImageView tbNavigation;
     @Bind(R.id.tbLogo)
     ImageView tbLogo;
     @Bind(R.id.tbAdd)
     ImageView tbAdd;
-    @Bind(R.id.recycleView)
-    RecyclerView recycleView;
+    @Bind(webView)
+    WebView mWebView;
+
 
     private View rootView;
     private AnimatedVectorDrawable menuAnimated;
     private AnimatedVectorDrawable backAnimated;
 
-    private DeviceRvAdapter adapter = new DeviceRvAdapter();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        rootView = inflater.inflate(R.layout.fragment_webview, container, false);
         ButterKnife.bind(this, rootView);
         animatorIcon();
-        initRecycleView();
         setListener();
+        initWebView();
         return rootView;
     }
+
 
     /**
      * 视图监听
@@ -94,19 +97,6 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
                 }, 300L);
             }
         });
-        adapter.setOnclickListener(data -> {
-            p.sendCmd(data.did, data.status);
-            //不进行命令成功检测
-        });
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WebViewFragment fragment = WebViewFragment.getInstance(WebViewFragment.class);
-                FragmentTransaction fragmentTransaction = ManageActivity.manageActivity.showFragment(fragment, true);
-                fragmentTransaction.hide(BaseFragment.getInstance(Main.class)).commitAllowingStateLoss();
-            }
-        });
     }
 
     /**
@@ -130,15 +120,6 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
         }
     }
 
-    /**
-     * 初始化 recycleView
-     */
-    private void initRecycleView() {
-        recycleView.setHasFixedSize(true);
-        recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recycleView.setAdapter(adapter);
-    }
-
 
     @Override
     public void onDestroyView() {
@@ -147,52 +128,63 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
     }
 
 
-    /**
-     * viewPager 改变监听
-     */
-    private class GOnPageChangeListener implements ViewPager.OnPageChangeListener {
+    private void initWebView() {
+        WebSettings settings = mWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        mWebView.loadUrl("file:///android_asset/hack/hack1.html");
+        //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // TODO Auto-generated method stub
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
+                return true;
+            }
+        });
 
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        // mWebView.addJavascriptInterface(this, "GetAndroid");
+        mWebView.addJavascriptInterface(new JsInteration(), "GetAndroid");
+        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT) {
+
+            WebView.setWebContentsDebuggingEnabled(true);
 
         }
 
-        @Override
-        public void onPageSelected(int position) {
+    }
 
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
 
     }
 
-    /**
-     * View 接口实现
-     * -------------------------------------------------
-     */
+    class JsInteration {
+        @JavascriptInterface
+        public void queryDevices(String id) {
 
-    @Override
-    public void setAdapterDate(DevicesInfoBean infos) {
-        adapter.setData(infos);
-    }
+            try {
 
-    @Override
-    public RecyclerView.Adapter getAdapter() {
-        return adapter;
-    }
+                HttpRequest.getInstance().queryDevice(id, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
 
-    @Override
-    public void upDate() {
-        adapter.notifyDataSetChanged();
-    }
+                    }
 
-    @Override
-    public void showTip(String e) {
-        Logger.d(e);
-        //TODO 错误提示控件
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String result = response.body().string();
+                        mWebView.loadUrl("javascript:appendDeviceItem(" + result + ")");
+
+                    }
+                });
+
+            } catch (IOException e) {
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+
+            }
     }
 
 }

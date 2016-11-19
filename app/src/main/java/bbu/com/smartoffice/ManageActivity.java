@@ -62,8 +62,7 @@ public class ManageActivity extends Activity {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         String clsName = instance.getClass().getName();
         if (getFragmentManager().findFragmentByTag(clsName) == null)
-            fragmentTransaction
-                    .add(R.id.MainContain, instance, clsName);
+            fragmentTransaction.add(R.id.MainContain, instance, clsName);
         if (backStatic)
             fragmentTransaction.addToBackStack(clsName);
         return fragmentTransaction;

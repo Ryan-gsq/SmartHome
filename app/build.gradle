@@ -47,4 +47,5 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.2'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.hwangjr.rxbus:rxbus:1.0.5'
+    compile 'com.squareup.okhttp3:okhttp:3.4.2'
 }
