@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.transition.Slide;
 import android.view.Gravity;
@@ -14,8 +15,13 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import com.orhanobut.logger.Logger;
+
+import bbu.com.smartoffice.C;
+import bbu.com.smartoffice.Model.DeviceInfoModel;
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.base.BaseFragment;
+import bbu.com.smartoffice.presenter.LaunchPresenter;
 import bbu.com.smartoffice.utils.ConditionTaskUtil;
 import bbu.com.smartoffice.utils.TransitionUtil;
 import butterknife.Bind;
@@ -27,7 +33,7 @@ import static bbu.com.smartoffice.ManageActivity.manageActivity;
  * Created by G on 2016/11/15 0015.
  */
 
-public class Launch extends BaseFragment {
+public class Launch extends BaseFragment<LaunchPresenter, DeviceInfoModel> {
     @Bind(R.id.imageView)
     ImageView logo;
 
@@ -40,9 +46,8 @@ public class Launch extends BaseFragment {
         rootView = inflater.inflate(R.layout.fragment_launch, container, false);
         ButterKnife.bind(this, rootView);
         anim();
-        //条件任务
-        //eg.完成3次某种请求后加载下一个UI
-        conditionTaskUtil = new ConditionTaskUtil(5, new LoadNextUI());
+        //最少4s  最多6s  如果4~6 数据都好了就进入
+        conditionTaskUtil = new ConditionTaskUtil(2, new LoadNextUI());
         LoadData();
         return rootView;
     }
@@ -78,21 +83,20 @@ public class Launch extends BaseFragment {
     }
 
     private void LoadData() {
-        //TODO Load something   eg: 延时3s后进入Main
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 10; i++) {
-                    try {
-                        Thread.sleep(1000);
-                        conditionTaskUtil.excute();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+        //最少显示启动页时间4 s
+        new Handler().postDelayed(() -> conditionTaskUtil.excute()
+                , 4000L);
+        //超时时间
+        new Handler().postDelayed(() -> conditionTaskUtil.excute()
+                , 6000L);
 
+        p.getDevice(C.DEVICE).subscribe(integer -> {
+            Logger.d(integer);
+            p.getDevice(C.SENSOR).subscribe(integer1 -> {
+                Logger.d(integer1);
+                conditionTaskUtil.excute();
+            });
+        });
     }
 
     @Override

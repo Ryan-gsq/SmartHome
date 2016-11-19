@@ -6,7 +6,6 @@ import bbu.com.smartoffice.Model.DeviceInfoModelBase;
 import bbu.com.smartoffice.base.BasePresenter;
 import bbu.com.smartoffice.base.BaseView;
 import bbu.com.smartoffice.jsonBean.DevicesInfoBean;
-import bbu.com.smartoffice.ui.Main;
 
 /**
  * Created by G on 2016/11/16 0016.
@@ -23,7 +22,7 @@ public interface MainContract {
         void showTip(String e);
     }
 
-    abstract class Presenter extends BasePresenter<Main, DeviceInfoModelBase> {
+    abstract class Presenter extends BasePresenter<View, DeviceInfoModelBase> {
         public abstract void upDate();
 
         public abstract void setDeviceState(int did, boolean open);

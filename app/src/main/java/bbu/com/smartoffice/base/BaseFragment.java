@@ -2,6 +2,7 @@ package bbu.com.smartoffice.base;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 
 import bbu.com.smartoffice.utils.Tutil;
@@ -13,7 +14,7 @@ import static bbu.com.smartoffice.ManageActivity.manageActivity;
  */
 
 public class BaseFragment<P extends BasePresenter, M extends BaseModel> extends Fragment {
-    BasePresenter presenter;
+    protected P p;
 
     /**
      * 获取一个 Fragment实例  如果Fragment之前已经载入 就返回之前的Fragment
@@ -36,15 +37,14 @@ public class BaseFragment<P extends BasePresenter, M extends BaseModel> extends 
     /**
      * 保存一个粉presenter实例 , 通知present调用  onStart
      *
-     * @param savedInstanceState
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = Tutil.getT(this, 0);
-        if (presenter != null) {
-            presenter.setVM(this, (BaseModel) Tutil.getT(this, 1));
-            presenter.onAttach();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        p = Tutil.getT(this, 0);
+        if (p != null) {
+            p.setVM(this, (BaseModel) Tutil.getT(this, 1));
+            p.onAttach();
         }
     }
 
@@ -54,7 +54,7 @@ public class BaseFragment<P extends BasePresenter, M extends BaseModel> extends 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (presenter != null)
-            presenter.onDestroy();
+        if (p != null)
+            p.onDestroy();
     }
 }

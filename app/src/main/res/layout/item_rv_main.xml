@@ -6,6 +6,8 @@
     android:layout_height="83dp"
     android:background="@color/white"
     android:clickable="true"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp"
     android:stateListAnimator="@animator/touch_raise">
 
     <ImageView
@@ -18,8 +20,7 @@
         android:alpha="0.87"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title"
@@ -33,9 +34,10 @@
         android:typeface="sans"
         app:layout_constraintBottom_toBottomOf="@+id/icon"
         app:layout_constraintLeft_toRightOf="@+id/icon"
-        app:layout_constraintTop_toTopOf="@+id/icon"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="Light" />
+        tools:text="Light"
+        android:layout_marginTop="16dp" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -118,10 +120,10 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="1dp"
+        android:layout_width="@dimen/divider_height"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"
         android:alpha="0.2"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -132,7 +134,7 @@
     <View
         android:id="@+id/view1"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/divider_height"
         android:alpha="0.1"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"

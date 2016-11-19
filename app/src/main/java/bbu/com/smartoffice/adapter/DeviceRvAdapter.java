@@ -103,7 +103,7 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         if (second1 != 0)
             result += second1 + " s ";
 
-        return result + "  ago";
+        return result + "ago";
     }
 
 

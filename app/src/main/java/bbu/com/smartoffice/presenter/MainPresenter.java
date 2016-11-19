@@ -44,6 +44,10 @@ public class MainPresenter extends MainContract.Presenter {
 
     @Override
     public void onAttach() {
-        upDate();
+        m.setDeviceType(C.DEVICE);
+        if (DeviceInfoModel.deviceInfoBean != null)
+            v.setAdapterDate(DeviceInfoModel.deviceInfoBean);
+        else
+            upDate();
     }
 }

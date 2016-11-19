@@ -42,7 +42,6 @@ public class DeviceInfoModel implements DeviceInfoModelBase {
 
     @Override
     public void onDestroy() {
-        deviceInfoBean = null;
         oneNet = null;
     }
 

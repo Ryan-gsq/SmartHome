@@ -38,7 +38,7 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
     View toolbarBg;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.tbNavigation)
+    @Bind(R.id.tbBack)
     ImageView tbNavigation;
     @Bind(R.id.tbLogo)
     ImageView tbLogo;
@@ -51,7 +51,7 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
     private AnimatedVectorDrawable menuAnimated;
     private AnimatedVectorDrawable backAnimated;
 
-    private DeviceRvAdapter adapter;
+    private DeviceRvAdapter adapter = new DeviceRvAdapter();
 
     @Nullable
     @Override
@@ -119,7 +119,6 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
      * 初始化 recycleView
      */
     private void initRecycleView() {
-        adapter = new DeviceRvAdapter();
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycleView.setAdapter(adapter);
@@ -172,9 +171,7 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
 
     @Override
     public void upDate() {
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
