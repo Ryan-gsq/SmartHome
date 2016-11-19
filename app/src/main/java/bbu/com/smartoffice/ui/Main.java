@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -88,31 +87,19 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
                 animNavButton(true);
             }
         });
-        tbNavigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tbNavigation.setImageDrawable(menuAnimated);
-                menuAnimated.start();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        manageActivity.drawerLayout.openDrawer(Gravity.LEFT);
-                    }
-                }, 300L);
-            }
+        tbNavigation.setOnClickListener(view -> {
+            tbNavigation.setImageDrawable(menuAnimated);
+            menuAnimated.start();
+            new Handler().postDelayed(() -> manageActivity.drawerLayout.openDrawer(Gravity.LEFT), 300L);
         });
         adapter.setOnclickListener(data -> {
             p.sendCmd(data.did, data.status);
             //不进行命令成功检测
         });
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WebViewFragment fragment = WebViewFragment.getInstance(WebViewFragment.class);
-                FragmentTransaction fragmentTransaction = ManageActivity.manageActivity.showFragment(fragment, true);
-                fragmentTransaction.hide(BaseFragment.getInstance(Main.class)).commitAllowingStateLoss();
-            }
+        fab.setOnClickListener(view -> {
+            WebViewFragment fragment = WebViewFragment.getInstance(WebViewFragment.class);
+            FragmentTransaction fragmentTransaction = ManageActivity.manageActivity.showFragment(fragment, true);
+            fragmentTransaction.hide(BaseFragment.getInstance(Main.class)).commitAllowingStateLoss();
         });
     }
 
@@ -146,34 +133,10 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
         recycleView.setAdapter(adapter);
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-
-
-    /**
-     * viewPager 改变监听
-     */
-    private class GOnPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-
     }
 
     /**

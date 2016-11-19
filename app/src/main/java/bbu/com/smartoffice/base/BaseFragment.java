@@ -48,6 +48,21 @@ public class BaseFragment<P extends BasePresenter, M extends BaseModel> extends 
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        manageActivity.setTopFragment(this);
+    }
+
+    /**
+     * 处理返回键的逻辑 ! 如果返回键按下需要自己消费掉这次返回键 返回真
+     *
+     * @return 真 不响应返回按下 假 响应
+     */
+    public boolean onInterceptBackClick() {
+        return false;
+    }
+
     /**
      * 清空Present 引用 释放资源
      */

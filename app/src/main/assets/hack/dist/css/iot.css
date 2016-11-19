@@ -1,0 +1,30 @@
+body, .thumbnail{
+	font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei" !important;
+
+}
+.thumbnail{
+	padding: 10px;
+	background-color: #f4f4f4;
+}
+.thumbnail span{
+	font-size: 20px;
+    color: #aaa;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei" !important;
+}
+.wrapper{
+	background-color: #fff !important;
+}
+
+.content-wrapper, .right-side{
+	background-color: #fff;
+}
+
+.operate-device{
+	position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+.isdisplay{
+	display: none;
+}

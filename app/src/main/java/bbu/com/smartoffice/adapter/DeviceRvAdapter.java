@@ -66,11 +66,9 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         int currentValue = 0;
         String endTime = "";
 
-        int index = -1;
         for (int i = 0; i < streamBean.getData().size(); i++) {
             dataBean = streamBean.getData().get(i);
             if (dataBean.getId().equals("switch")) {
-                index = i;
                 currentValue = dataBean.getCurrent_value();
                 endTime = dataBean.getUpdate_at();
                 break;
@@ -84,14 +82,11 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         h.time.setText(getTimeDifferent(endTime));
         h.mode.setText("无规则");
 
-        int finalCurrentValue = currentValue;
-        int finalIndex = index;
         h.switchButton.setOnCheckedChangeListener((compoundButton, b) -> {
             ClickData clickData = new ClickData();
             clickData.did = devicesBean.getId();
-            clickData.status = finalCurrentValue == 0 ? "on" : "off";
+            clickData.status = b ? "on" : "off";
             if (listener != null)
-                devices.infos.get(position).getStreamBean().getData().get(finalIndex).setCurrent_value(finalCurrentValue == 0 ? 1 : 0);
                 listener.onClick(clickData);
         });
     }

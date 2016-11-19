@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.ui.Drawer;
@@ -24,6 +26,13 @@ public class ManageActivity extends Activity {
     public FrameLayout MainContain;
     @Bind(R.id.DrawerContain)
     public FrameLayout DrawerContain;
+    private long backPressPrevious;
+    private BaseFragment topFragment;
+
+
+    public void setTopFragment(BaseFragment topFragment) {
+        this.topFragment = topFragment;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +106,26 @@ public class ManageActivity extends Activity {
         } else {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED); //关闭
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawer(Gravity.LEFT);
+            return;
+        }
+
+        if (topFragment.onInterceptBackClick()) {
+            return;
+        }
+
+        if (System.currentTimeMillis() - backPressPrevious < 2000) {
+            finish();
+        } else {
+            Toast.makeText(this, "在按一次退出程序", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressPrevious = System.currentTimeMillis();
     }
 
 }

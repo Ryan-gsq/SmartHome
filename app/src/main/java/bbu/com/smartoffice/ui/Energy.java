@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import bbu.com.smartoffice.ManageActivity;
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.utils.TransitionUtil;
@@ -71,6 +72,15 @@ public class Energy extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
+    private void finish() {
+        ManageActivity.manageActivity.replaceFragment(BaseFragment.getInstance(Main.class)).commitAllowingStateLoss();
+    }
+
+    @Override
+    public boolean onInterceptBackClick() {
+        finish();
+        return true;
+    }
 
     /**
      * 设置X 轴的显示
@@ -106,7 +116,7 @@ public class Energy extends BaseFragment {
 
         //坐标轴
         Axis axisX = new Axis(); //X轴
-        axisX.setHasTiltedLabels(true);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
+        axisX.setHasTiltedLabels(false);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
         axisX.setTextColor(Color.WHITE);  //设置字体颜色
         //axisX.setName("date");  //表格名称
         axisX.setTextSize(10);//设置字体大小

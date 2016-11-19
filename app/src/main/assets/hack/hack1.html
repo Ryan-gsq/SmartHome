@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Dashboard</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+          name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/Font-Awesome-master/css/font-awesome.min.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="dist/css/iot.css">
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-switch.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="index2.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>A</b>LT</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Admin</b>LTE</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+    </header>
+
+    <!-- Content Wrapper. Contains page content -->
+    <!-- 添加设备 -->
+    <div id="add-device" class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <div class="form-group">
+            <!-- <label for="exampleInputEmail1">参数值</label> -->
+            <input type="text" class="form-control" id="rulename" placeholder="请输入场景名">
+        </div>
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title"> 添加规则</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <a id="add-rule" href="#" class="thumbnail">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title"> 添加动作</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <a id="add-action" href="#" class="thumbnail">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.content-wrapper -->
+    <!-- 选择传感器 -->
+    <div id="choose-sensor" class="content-wrapper isdisplay">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">选择传感器</h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul id="sensor-list" class="nav nav-pills nav-stacked">
+
+                        </ul>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </div><!-- /.content-wrapper -->
+    <!-- 选择设备 -->
+    <div id="choose-device" class="content-wrapper isdisplay">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">选择设备</h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul id="device-list" class="nav nav-pills nav-stacked">
+
+                        </ul>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </div><!-- /.content-wrapper -->
+    <!-- 设置规则 -->
+    <div id="set-rule" class="content-wrapper isdisplay">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <div class="form-group">
+                            <label>当传感器参数值：</label>
+                            <select class="form-control">
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                                <option>option 5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-3">
+                        <label>满足条件</label>
+                        <div class="form-group">
+                            <div class="col-xs-4">
+                                <label>
+                                    大于
+                                    <input type="radio" name="compare" class="flat-red" value=">"
+                                           checked>
+                                </label>
+                            </div>
+                            <div class="col-xs-4">
+                                <label>
+                                    小于
+                                    <input type="radio" name="compare" class="flat-red" value="<">
+                                </label>
+                            </div>
+                            <div class="col-xs-4">
+                                <label>
+                                    等于
+                                    <input type="radio" name="compare" class="flat-red" value="=">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-3">
+                        <div class="form-group">
+                            <label for="threshold">参数值</label>
+                            <input type="text" class="form-control" id="threshold"
+                                   placeholder="请输入门限值">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-3">
+                        <!-- <div class="form-group"> -->
+                        <button id="ruleok" class="btn bg-navy btn-flat" style="width: 100%">确定
+                        </button>
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.content-wrapper -->
+    <!-- 开启设备 -->
+    <div id="no-off-device" class="content-wrapper isdisplay">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">开启设备</h3>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="operate-device">
+                                <label>Important</label>
+                                <div style="float: right">
+                                    <input type="checkbox" name="device-switch" data-size="mini"
+                                           checked>
+                                </div>
+                            </li>
+                        </ul>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </div><!-- /.content-wrapper -->
+    <!-- Control Sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div><!-- ./wrapper -->
+
+<!-- jQuery 2.1.4 -->
+<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- Sparkline -->
+<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="plugins/iCheck/icheck.min.js"></script>
+<script src="bootstrap/js/bootstrap-switch.min.js"></script>
+<script src="dist/js/hack.js"></script>
+</body>
+</html>
