@@ -3,11 +3,9 @@ package bbu.com.smartoffice.ui;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,14 +89,7 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
         tbNavigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tbNavigation.setImageDrawable(menuAnimated);
-                menuAnimated.start();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        manageActivity.drawerLayout.openDrawer(Gravity.LEFT);
-                    }
-                }, 300L);
+                manageActivity.getFragmentManager().popBackStack();
             }
         });
     }
