@@ -12,7 +12,7 @@
 
     <color name="backgroundDark">#333333</color>
     <color name="backgroundLight">#fafafa</color>
-    <color name="white">#fff</color>
+    <color name="white">#ffffff</color>
     <color name="black">#000</color>
     <color name="primaryTextWhite">#ddffffff</color>
     <color name="darkTextWhite">#89ffffff</color>

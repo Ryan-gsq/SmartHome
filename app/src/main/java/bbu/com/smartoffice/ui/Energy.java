@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +31,9 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 public class Energy extends BaseFragment {
 
-    @Bind(R.id.toolbarBg)
-    View toolbarBg;
-    @Bind(R.id.fab)
-    SmartTabLayout fab;
     @Bind(R.id.chart)
     LineChartView mLineChartView;
+
     String[] date = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};//X轴的标注
     int[] score = {33, 36, 50, 32, 28, 69, 20};//图表的数据点
     private View rootView;
