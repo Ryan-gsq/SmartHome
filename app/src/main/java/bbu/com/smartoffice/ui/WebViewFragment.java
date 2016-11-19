@@ -156,8 +156,8 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
     //TODO
     @JavascriptInterface
     public void sendCMD(String json) {
-        OneNetUtils.SendCmd("4069468", json);
-        Toast.makeText(getActivity(), "规则发送成功", Toast.LENGTH_SHORT).show();
+        OneNetUtils.SendCmd("4069468", json).subscribe(s -> Toast.makeText(getActivity(), "规则发送成功", Toast.LENGTH_SHORT).show());
+
     }
 
 }
