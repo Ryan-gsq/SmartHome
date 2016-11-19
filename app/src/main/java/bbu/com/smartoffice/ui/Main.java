@@ -26,6 +26,7 @@ import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.contract.MainContract;
 import bbu.com.smartoffice.jsonBean.DevicesInfoBean;
 import bbu.com.smartoffice.presenter.MainPresenter;
+import bbu.com.smartoffice.utils.TransitionUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -61,9 +62,15 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
         animatorIcon();
+        transition();
         initRecycleView();
         setListener();
         return rootView;
+    }
+
+    private void transition() {
+        setExitTransition(TransitionUtil.getTransition(R.transition.slid_left));
+        setReenterTransition(TransitionUtil.getTransition(R.transition.slid_right));
     }
 
     /**

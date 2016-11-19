@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    android:orientation="vertical"
     android:paddingTop="@dimen/status_bar_height">
 
     <View

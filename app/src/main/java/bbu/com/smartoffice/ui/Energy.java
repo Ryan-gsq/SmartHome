@@ -12,6 +12,7 @@ import java.util.List;
 
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.base.BaseFragment;
+import bbu.com.smartoffice.utils.TransitionUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lecho.lib.hellocharts.gesture.ContainerScrollType;
@@ -46,11 +47,17 @@ public class Energy extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_energy, container, false);
         ButterKnife.bind(this, rootView);
+        transition();
         getAxisXLables();//获取x轴的标注
         getAxisPoints();//获取坐标点
         initLineChart();//初始化
         return rootView;
 
+    }
+
+    private void transition() {
+        setExitTransition(TransitionUtil.getTransition(R.transition.slid_left));
+        setExitTransition(TransitionUtil.getTransition(R.transition.slid_right));
     }
 
     @Override

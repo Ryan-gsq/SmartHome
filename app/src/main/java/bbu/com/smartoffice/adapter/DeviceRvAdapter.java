@@ -1,6 +1,5 @@
 package bbu.com.smartoffice.adapter;
 
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +34,8 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
 
 
     public DeviceRvAdapter() {
+        iconMap.put("Light", R.drawable.icon_aircleaner);
+        iconMap.put("fengshan", R.drawable.icon_airfad);
     }
 
     public void setData(DevicesInfoBean drivesBean) {
@@ -64,9 +65,12 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         StreamBean.DataBean dataBean;
         int currentValue = 0;
         String endTime = "";
+
+        int index = -1;
         for (int i = 0; i < streamBean.getData().size(); i++) {
             dataBean = streamBean.getData().get(i);
             if (dataBean.getId().equals("switch")) {
+                index = i;
                 currentValue = dataBean.getCurrent_value();
                 endTime = dataBean.getUpdate_at();
                 break;
@@ -81,11 +85,13 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         h.mode.setText("无规则");
 
         int finalCurrentValue = currentValue;
+        int finalIndex = index;
         h.switchButton.setOnCheckedChangeListener((compoundButton, b) -> {
             ClickData clickData = new ClickData();
             clickData.did = devicesBean.getId();
             clickData.status = finalCurrentValue == 0 ? "on" : "off";
             if (listener != null)
+                devices.infos.get(position).getStreamBean().getData().get(finalIndex).setCurrent_value(finalCurrentValue == 0 ? 1 : 0);
                 listener.onClick(clickData);
         });
     }
@@ -96,9 +102,8 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
     }
 
     private Drawable getIcon(String tag) {
-        Drawable drawable = Utils.getContext().getDrawable(R.drawable.audio_wave);
-        drawable.mutate().setColorFilter(Utils.getColorFromRes(R.color.black), PorterDuff.Mode.SRC_IN);
-        drawable.setAlpha(137);
+        Integer resId = iconMap.get(tag);
+        Drawable drawable = Utils.getContext().getDrawable(resId);
         return drawable;
     }
 
