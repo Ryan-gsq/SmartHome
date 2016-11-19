@@ -2,8 +2,8 @@ package bbu.com.smartoffice.base;
 
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import bbu.com.smartoffice.utils.Tutil;
 
@@ -39,8 +39,8 @@ public class BaseFragment<P extends BasePresenter, M extends BaseModel> extends 
      *
      */
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         p = Tutil.getT(this, 0);
         if (p != null) {
             p.setVM(this, (BaseModel) Tutil.getT(this, 1));

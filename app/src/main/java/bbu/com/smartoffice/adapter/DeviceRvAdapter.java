@@ -133,6 +133,9 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         if (second1 != 0)
             result += second1 + " s ";
 
+        if (result.equals(""))
+            result = "1min ";
+
         return result + "ago";
     }
 
