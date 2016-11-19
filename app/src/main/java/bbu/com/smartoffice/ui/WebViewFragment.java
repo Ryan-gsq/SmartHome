@@ -16,6 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -143,48 +144,74 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
             }
         });
 
-        // mWebView.addJavascriptInterface(this, "GetAndroid");
-        mWebView.addJavascriptInterface(new JsInteration(), "GetAndroid");
-        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
+        }
+        mWebView.addJavascriptInterface(this, "GetAndroid");
+
+    }
+
+
+    @JavascriptInterface
+    public void queryDevices(String id) {
+
+        try {
+
+            HttpRequest.getInstance().queryDevice(id, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = response.body().string();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mWebView.loadUrl("javascript:appendDeviceItem(" + result + ")");
+                        }
+                    });
+
+
+                }
+            });
+
+        } catch (IOException e) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
+                }
+            });
 
         }
 
-    }
-
 
     }
 
-    class JsInteration {
-        @JavascriptInterface
-        public void queryDevices(String id) {
+    final class DemoJavaScriptInterface {
+        DemoJavaScriptInterface() {
+        }
 
-            try {
-
-                HttpRequest.getInstance().queryDevice(id, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String result = response.body().string();
-                        mWebView.loadUrl("javascript:appendDeviceItem(" + result + ")");
-
-                    }
-                });
-
-            } catch (IOException e) {
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-
-            }
+        /**
+         * This is not called on the UI thread. Post a runnable to invoke
+         * loadUrl on the UI thread.
+         */
+        public void clickOnAndroid() {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 }
