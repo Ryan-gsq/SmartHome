@@ -1,6 +1,5 @@
 package bbu.com.smartoffice.ui;
 
-import android.app.FragmentTransaction;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 
 import com.orhanobut.logger.Logger;
 
-import bbu.com.smartoffice.ManageActivity;
 import bbu.com.smartoffice.Model.DeviceInfoModel;
 import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.adapter.DeviceRvAdapter;
@@ -98,8 +96,7 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
         });
         fab.setOnClickListener(view -> {
             WebViewFragment fragment = WebViewFragment.getInstance(WebViewFragment.class);
-            FragmentTransaction fragmentTransaction = ManageActivity.manageActivity.showFragment(fragment, true);
-            fragmentTransaction.hide(BaseFragment.getInstance(Main.class)).commitAllowingStateLoss();
+            manageActivity.replaceFragment(fragment).addToBackStack(null).commitAllowingStateLoss();
         });
     }
 
@@ -109,6 +106,19 @@ public class Main extends BaseFragment<MainPresenter, DeviceInfoModel> implement
     private void animatorIcon() {
         menuAnimated = (AnimatedVectorDrawable) getActivity().getDrawable(R.drawable.ic_menu_animatable);
         backAnimated = (AnimatedVectorDrawable) getActivity().getDrawable(R.drawable.ic_back_animatable);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        manageActivity.setDrawerLayoutAllow(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        manageActivity.setDrawerLayoutAllow(false);
     }
 
     /**

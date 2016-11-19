@@ -1,10 +1,8 @@
 package bbu.com.smartoffice.ui;
 
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +23,7 @@ import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.net.HttpRequest;
 import bbu.com.smartoffice.presenter.WebViewPresenter;
 import bbu.com.smartoffice.utils.OneNetUtils;
+import bbu.com.smartoffice.utils.TransitionUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
@@ -32,28 +31,20 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static bbu.com.smartoffice.ManageActivity.manageActivity;
-import static bbu.com.smartoffice.R.id.webView;
 
 /**
  * Created by G on 2016/11/15 0015.
  */
 
 public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoModel> {
-    @Bind(R.id.toolbarBg)
-    View toolbarBg;
+
+
     @Bind(R.id.tbBack)
     ImageView tbBack;
-    @Bind(R.id.tbLogo)
-    ImageView tbLogo;
-    @Bind(R.id.tbAdd)
-    ImageView tbAdd;
-    @Bind(webView)
+    @Bind(R.id.webView)
     WebView mWebView;
-
-
     private View rootView;
-    private AnimatedVectorDrawable menuAnimated;
-    private AnimatedVectorDrawable backAnimated;
+
 
 
     @Nullable
@@ -61,10 +52,15 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_webview, container, false);
         ButterKnife.bind(this, rootView);
-        animatorIcon();
         setListener();
+        transition();
         initWebView();
         return rootView;
+    }
+
+    private void transition() {
+        setExitTransition(TransitionUtil.getTransition(R.transition.slid_left));
+        setEnterTransition(TransitionUtil.getTransition(R.transition.slid_right));
     }
 
 
@@ -72,17 +68,6 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
      * 视图监听
      */
     private void setListener() {
-        manageActivity.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                animNavButton(false);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                animNavButton(true);
-            }
-        });
         tbBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,28 +75,6 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
             }
         });
     }
-
-    /**
-     * NavButton 矢量动画
-     */
-    private void animatorIcon() {
-        menuAnimated = (AnimatedVectorDrawable) getActivity().getDrawable(R.drawable.ic_menu_animatable);
-        backAnimated = (AnimatedVectorDrawable) getActivity().getDrawable(R.drawable.ic_back_animatable);
-    }
-
-    /**
-     * NavButton 矢量动画 改变   back - true  menu>back
-     */
-    private void animNavButton(boolean back) {
-        if (back) {
-            tbBack.setImageDrawable(menuAnimated);
-            menuAnimated.start();
-        } else {
-            tbBack.setImageDrawable(backAnimated);
-            backAnimated.start();
-        }
-    }
-
 
     @Override
     public void onDestroyView() {
