@@ -173,4 +173,6 @@ public class DeviceInfoModel implements DeviceInfoModelBase {
             }
         }));
     }
+
+
 }
