@@ -18,6 +18,8 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.IOException;
 
 import bbu.com.smartoffice.Model.DeviceInfoModel;
@@ -25,6 +27,7 @@ import bbu.com.smartoffice.R;
 import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.net.HttpRequest;
 import bbu.com.smartoffice.presenter.WebViewPresenter;
+import bbu.com.smartoffice.utils.OneNetUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
@@ -151,6 +154,11 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
 
     }
 
+    @Override
+    public boolean onInterceptBackClick() {
+        manageActivity.getFragmentManager().popBackStack();
+        return true;
+    }
 
     @JavascriptInterface
     public void queryDevices(String id) {
@@ -166,7 +174,6 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
                             Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
 
                 @Override
@@ -175,14 +182,16 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mWebView.loadUrl("javascript:appendDeviceItem(" + result + ")");
+                            try {
+                                mWebView.loadUrl("javascript:appendDeviceItem('" + result + "')");
+                            } catch (Exception e) {
+                                Logger.d("javascript:appendDeviceItem('" + result + "')");
+                            }
+
                         }
                     });
-
-
                 }
             });
-
         } catch (IOException e) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -190,28 +199,13 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
                     Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
                 }
             });
-
         }
-
-
     }
 
-    final class DemoJavaScriptInterface {
-        DemoJavaScriptInterface() {
-        }
-
-        /**
-         * This is not called on the UI thread. Post a runnable to invoke
-         * loadUrl on the UI thread.
-         */
-        public void clickOnAndroid() {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getActivity(), "网络错误", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+    //TODO
+    @JavascriptInterface
+    public void sendCMD(String json) {
+        OneNetUtils.SendCmd("4069468", json);
     }
 
 }

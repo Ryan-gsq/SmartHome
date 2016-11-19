@@ -28,7 +28,7 @@ public class DrawerRvAdapter extends RecyclerView.Adapter implements View.OnClic
         return focusItem;
     }
 
-    private void setFocusItem(int index) {
+    public void setFocusItem(int index) {
         if (focusItem != index)
             focusItem = index;
     }

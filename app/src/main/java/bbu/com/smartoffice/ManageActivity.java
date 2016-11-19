@@ -8,9 +8,12 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 import bbu.com.smartoffice.base.BaseFragment;
 import bbu.com.smartoffice.ui.Drawer;
 import bbu.com.smartoffice.ui.Launch;
+import bbu.com.smartoffice.ui.Main;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -31,6 +34,9 @@ public class ManageActivity extends Activity {
 
 
     public void setTopFragment(BaseFragment topFragment) {
+        if (Objects.equals(topFragment.getClass().getName(), Main.class.getName())) {
+            BaseFragment.getInstance(Drawer.class).setFoucItem(0);
+        }
         this.topFragment = topFragment;
     }
 

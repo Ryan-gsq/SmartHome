@@ -1,3 +1,26 @@
+function appendDeviceItem(deviceInfo){
+  deviceInfo = JSON.parse(deviceInfo);
+  var type = ''
+  if (deviceInfo.data.tags[0] == 'DEVICE') {
+    type = 'device';
+    var li = '<li class="' + type + '" name="' + deviceInfo.data.id + '"><a href="#">' + deviceInfo.data.title + '</a></li>';
+    $('#device-list').append(li);
+  }else if(deviceInfo.data.tags[0] == 'SENSOR'){
+    type = 'sensor';
+    var valuedoors = '';
+    var valuedoor = '';
+    if (deviceInfo.data.datastreams) {
+      for (var j = 0; j < deviceInfo.data.datastreams.length; j++) {
+        valuedoors = valuedoors + deviceInfo.data.datastreams[j].id + ',';
+      }
+      valuedoor = 'valuedoor=' + valuedoors;
+    }else{
+      valuedoor = 'valuedoor=' + deviceInfo.data.desc + ',';
+    }
+    var li = '<li class="' + type + '" name="' + deviceInfo.data.id + '"' + valuedoor + '><a href="#">' + deviceInfo.data.title + '</a></li>';
+    $('#sensor-list').append(li);
+  }
+}
 $(function(){
   var masterKey = 'nQQC7mWauJvWKSzImNg4tmNf03M=';
   var deviceIds = [4069466, 4069464, 4069463, 4069462];
@@ -214,10 +237,12 @@ $(function(){
   function switchEvent(){
     $("[name='device-switch']").on('switchChange.bootstrapSwitch', function (e, state) {
       if(state){
-              ruleJson.action.value = 1;
+              ruleJson.action.value = 0;
         }else{
-          ruleJson.action.value = 0;
+          ruleJson.action.value = 1;
       }
+      $('.content-wrapper:not(.isdisplay)').addClass('isdisplay');
+      $('#add-device').removeClass('isdisplay');
     });
   }
   switchEvent();
@@ -227,7 +252,7 @@ $(function(){
   });
 
   $('input[type="radio"]').click(function(){
-    ruleJson.rule.type = $("input[type='radio']:checked").val();
+    ruleJson.condition.type = $("input[type='radio']:checked").val();
   });
 
   var bodyHeight = document.body.clientHeight;
@@ -239,26 +264,22 @@ $(function(){
     $('#add-device').removeClass('isdisplay');
   });
 
-  function appendDeviceItem(deviceInfo){
-    if (deviceInfo.data.tags[0] == 'DEVICE') {
-      type = 'device';
-    }else if(deviceInfo.data.tags[0] == 'SENSOR'){
-      type = 'sensor';
-    }
-    var li = '<li class="' + type + '" name="' + deviceInfo.data.id + '"><a href="#">' + deviceInfo.data.title + '</a></li>';
-    if (deviceInfo.data.tags[0] == 'DEVICE') {
-      $('#device-list').append(li);
-    }else if(deviceInfo.data.tags[0] == 'SENSOR'){
-      $('#sensor-list').append(li);
-    }
-  }
-
   $('#add-rule').click(function(){
     $('#add-device').addClass('isdisplay');
     $('#choose-sensor').removeClass('isdisplay');
     $('#sensor-list').empty();
     // for (var i = 0; i < sensors.length; i++) {
-    //   var li = '<li class="sensor" name="' + sensors[i].data.id + '"><a href="#">' + sensors[i].data.title + '</a></li>';
+    //   var valuedoors = '';
+    //   var valuedoor = '';
+    //   if (sensors[i].data.datastreams) {
+    //     for (var j = 0; j < sensors[i].data.datastreams.length; j++) {
+    //       valuedoors = valuedoors + sensors[i].data.datastreams[j].id + ',';
+    //     }
+    //     valuedoor = 'valuedoor=' + valuedoors;
+    //   }else{
+    //     valuedoor = 'valuedoor=' + sensors[i].data.desc + ',';
+    //   }
+    //   var li = '<li class="sensor" name="' + sensors[i].data.id + '"' + valuedoor + '><a href="#">' + sensors[i].data.title + '</a></li>';
     //   $('#sensor-list').append(li);
     // }
     for (var i = 0; i < sensorIds.length; i++) {
@@ -283,6 +304,21 @@ $(function(){
     $('#choose-sensor').addClass('isdisplay');
     $('#set-rule').removeClass('isdisplay');
     ruleJson.condition.device_id = $(e.target).parent().attr('name');
+    var valdoors = $(e.target).parent().attr('valuedoor');
+    valdoors = valdoors.split(",");
+    $('#valuedoor').empty();
+    var appendHTML = '<label>当传感器参数值：</label>';
+    if (valdoors.length-1 != 1) {
+      appendHTML = appendHTML + '<select id="val-select" class="form-control">';
+      for (var i = 0; i < valdoors.length - 1; i++) {
+        appendHTML = appendHTML + '<option value="' + valdoors[i] + '">'+ valdoors[i] +'</option>';
+      }
+      appendHTML = appendHTML + '</select>';
+    }else{
+      appendHTML = appendHTML + '<span>' + valdoors[0] + '</span>';
+    }
+    $('#valuedoor').append(appendHTML);
+    isTHSensor();
   });
   $('#device-list').delegate('.device', 'click', function(e){
     var name = $(e.target).text();
@@ -293,7 +329,26 @@ $(function(){
     ruleJson.action.device_id = $(e.target).parent().attr('name');
   });
 
-  $('#ruleok').click(function(){
+  $('#ruleok').click(function(e){
     ruleJson.condition.value = $('#threshold').val();
+    $('.content-wrapper:not(.isdisplay)').addClass('isdisplay');
+    $('#add-device').removeClass('isdisplay');
   });
+
+  function isTHSensor(){
+    if ($('#val-select')) {
+      $('#val-select').change(function(e){
+        var value = $('#val-select').val();
+        if (value == 'humitity') {
+          ruleJson.condition.device_function = 'H';
+        }else if (value == 'temperature') {
+          ruleJson.condition.device_function = 'T';
+        }
+      });
+    }
+  }
+
+  $('#sendsjson').click(function(e){
+    GetAndroid.sendCMD(JSON.stringify(ruleJson));
+  })
 });

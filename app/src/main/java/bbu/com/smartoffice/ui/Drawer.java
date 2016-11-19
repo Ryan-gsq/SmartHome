@@ -27,6 +27,7 @@ public class Drawer extends BaseFragment implements DrawerRvAdapter.OnItemClickL
     RecyclerView recycleView;
 
     private View rootView;
+    public DrawerRvAdapter adapter;
 
     @Nullable
     @Override
@@ -34,13 +35,17 @@ public class Drawer extends BaseFragment implements DrawerRvAdapter.OnItemClickL
         rootView = inflater.inflate(R.layout.fragment_drawer, container, false);
         ButterKnife.bind(this, rootView);
 
-        DrawerRvAdapter adapter = new DrawerRvAdapter();
+        adapter = new DrawerRvAdapter();
         adapter.setClickListener(this);
 
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recycleView.setAdapter(adapter);
         return rootView;
+    }
+
+    public void setFoucItem(int i) {
+        adapter.setFocusItem(i);
     }
 
     @Override

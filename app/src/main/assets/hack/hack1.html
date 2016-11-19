@@ -27,17 +27,6 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-    <header class="main-header">
-        <!-- Logo -->
-        <a href="index2.html" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>A</b>LT</span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Admin</b>LTE</span>
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-    </header>
-
     <!-- Content Wrapper. Contains page content -->
     <!-- 添加设备 -->
     <div id="add-device" class="content-wrapper">
@@ -58,7 +47,7 @@
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </div>
-                </div>
+            </div>
             </div><!-- /.box-body -->
         </div><!-- /.box -->
         <div class="box box-solid">
@@ -72,7 +61,7 @@
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                     </div>
-                </div>
+            </div>
             </div><!-- /.box-body -->
         </div><!-- /.box -->
     </div><!-- /.content-wrapper -->
@@ -95,6 +84,13 @@
             </div>
         </div>
     </div><!-- /.content-wrapper -->
+    <div>
+        <div class="col-xs-12 col-md-3">
+            <!-- <div class="form-group"> -->
+            <button id="sendsjson" class="btn bg-navy btn-flat" style="width: 100%">确定</button>
+            <!-- </div> -->
+        </div>
+    </div>
     <!-- 选择设备 -->
     <div id="choose-device" class="content-wrapper isdisplay">
         <!-- Content Header (Page header) -->
@@ -122,16 +118,10 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-xs-12 col-md-3">
-                        <div class="form-group">
+                        <div id="valuedoor" class="form-group">
                             <label>当传感器参数值：</label>
-                            <select class="form-control">
-                                <option>option 1</option>
-                                <option>option 2</option>
-                                <option>option 3</option>
-                                <option>option 4</option>
-                                <option>option 5</option>
-                            </select>
-                        </div>
+                            <span>光照</span>
+                </div>
                     </div>
                     <div class="col-xs-12 col-md-3">
                         <label>满足条件</label>
@@ -191,7 +181,7 @@
                                 <div style="float: right">
                                     <input type="checkbox" name="device-switch" data-size="mini"
                                            checked>
-                                </div>
+                    </div>
                             </li>
                         </ul>
                     </div><!-- /.box-body -->
@@ -207,14 +197,6 @@
 <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- Sparkline -->
-<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/fastclick.min.js"></script>
 <!-- iCheck 1.0.1 -->
 <script src="plugins/iCheck/icheck.min.js"></script>
 <script src="bootstrap/js/bootstrap-switch.min.js"></script>
