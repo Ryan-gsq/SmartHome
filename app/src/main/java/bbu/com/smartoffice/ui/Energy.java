@@ -35,8 +35,8 @@ public class Energy extends BaseFragment {
 
     @Bind(R.id.toolbarBg)
     View toolbarBg;
-    @Bind(R.id.tab)
-    SmartTabLayout tab;
+    @Bind(R.id.fab)
+    SmartTabLayout fab;
     @Bind(R.id.chart)
     LineChartView mLineChartView;
     String[] date = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};//X轴的标注

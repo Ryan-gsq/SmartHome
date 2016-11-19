@@ -16,7 +16,7 @@
         <targets>
             <target android:targetId="@id/tbBack" />
             <target android:targetId="@id/tbAdd" />
-            <target android:targetId="@id/tab" />
+            <target android:targetId="@id/fab" />
         </targets>
     </fade>
 
