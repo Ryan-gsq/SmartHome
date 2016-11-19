@@ -2,6 +2,7 @@ package bbu.com.smartoffice.ui;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,16 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 
 import bbu.com.smartoffice.Model.DeviceInfoModel;
 import bbu.com.smartoffice.R;
+import bbu.com.smartoffice.adapter.DeviceRvAdapter;
 import bbu.com.smartoffice.base.BaseFragment;
+import bbu.com.smartoffice.jsonBean.RuleBean;
 import bbu.com.smartoffice.net.HttpRequest;
 import bbu.com.smartoffice.presenter.WebViewPresenter;
 import bbu.com.smartoffice.utils.OneNetUtils;
@@ -156,7 +160,15 @@ public class WebViewFragment extends BaseFragment<WebViewPresenter, DeviceInfoMo
     //TODO
     @JavascriptInterface
     public void sendCMD(String json) {
-        OneNetUtils.SendCmd("4069468", json).subscribe(s -> Toast.makeText(getActivity(), "规则发送成功", Toast.LENGTH_SHORT).show());
+        Gson g = new Gson();
+        RuleBean ruleBean = g.fromJson(json, RuleBean.class);
+        DeviceRvAdapter.ruleName = ruleBean.getRulename();
+        OneNetUtils.SendCmd("4069468", json).subscribe(s ->
+                {
+                    Toast.makeText(getActivity(), "规则发送成功", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(() -> manageActivity.getFragmentManager().popBackStack(), 2000L);
+                }
+        );
 
     }
 

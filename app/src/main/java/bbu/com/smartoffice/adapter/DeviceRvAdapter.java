@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 
 public class DeviceRvAdapter extends RecyclerView.Adapter {
 
+    public static String ruleName = "无规则";
     DevicesInfoBean devices;
     Map<String, Integer> iconMap = new HashMap<>();
     private onClickListener listener;
@@ -80,7 +81,7 @@ public class DeviceRvAdapter extends RecyclerView.Adapter {
         h.switchState.setText(devicesBean.isOnline() ? "在线" : "离线");
         h.switchButton.setChecked(currentValue != 0);
         h.time.setText(getTimeDifferent(endTime));
-        h.mode.setText("无规则");
+        h.mode.setText(ruleName);
 
         h.switchButton.setOnCheckedChangeListener((compoundButton, b) -> {
             ClickData clickData = new ClickData();
